@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Management</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+</head>
+<body>
+<h1>User Management</h1>
+<div>
+    <form th:action="@{/user-management}" method="get">
+        <label for="userId">Search by User ID:</label>
+        <input type="text" id="userId" name="userId">
+        <button type="submit">Search</button>
+    </form>
+</div>
+<div>
+    <h2>All Users</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>User ID</th>
+            <th>Title</th>
+            <th>Body</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}">1</td>
+            <td th:text="${user.userId}">123</td>
+            <td th:text="${user.title}">Title</td>
+            <td th:text="${user.body}">Body content</td>
+            <td>
+                <form th:action="@{/users/delete/{id}(id=${user.id})}" method="post">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <button type="submit">Delete</button>
+                </form>
+                <form th:action="@{/users/update/{id}(id=${user.id})}" method="post">
+                    <button type="submit">Edit</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <h2>Add User</h2>
+    <form th:action="@{/users/add}" method="post">
+        <label for="userId">User ID:</label>
+        <input type="text" id="userId" name="userId" required>
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+        <label for="body">Body:</label>
+        <input type="text" id="body" name="body" required>
+        <button type="submit">Add User</button>
+    </form>
+</div>
+<div>
+    <h2>Update User</h2>
+    <form th:action="@{/users/update/{id}(id=${user.id})}" method="post" th:object="${user}">
+        <label for="userId">User ID:</label>
+        <input type="text" id="userId" th:field="*{userId}" required>
+        <label for="title">Title:</label>
+        <input type="text" id="title" th:field="*{title}" required>
+        <label for="body">Body:</label>
+        <input type="text" id="body" th:field="*{body}" required>
+        <button type="submit">Update User</button>
+    </form>
+</div>
+</body>
+</html>

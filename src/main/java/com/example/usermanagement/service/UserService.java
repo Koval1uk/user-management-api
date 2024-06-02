@@ -67,7 +67,7 @@ public class UserService {
                 return Optional.of(userRepository.save(user));
             }
         } catch (Exception e) {
-            //  exception
+        // exception
         }
         return Optional.empty();
     }
